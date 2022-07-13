@@ -7,13 +7,12 @@ import Carousel from 'react-native-snap-carousel';
 import CardMovie from '../components/CardMovie';
 import HorizontalSlider from '../components/HorizontalSlider';
 import { useMovies } from '../hooks/useMovies';
-import { Movie } from '../interfaces/movieInterface';
 
 const { width: windowWidth } = Dimensions.get('window');
 
 const HomeScreen = ({ navigation }) => {
   const { top } = useSafeAreaInsets();
-  const { moviesInCinema, isLoading } = useMovies();
+  const { nowPlaying, popular, topRated, upcoming, isLoading } = useMovies();
 
   if (isLoading) {
     return (
@@ -29,7 +28,7 @@ const HomeScreen = ({ navigation }) => {
         {/* Carousel principal */}
         <View style={{ height: 440 }}>
           <Carousel
-            data={moviesInCinema}
+            data={nowPlaying}
             renderItem={({ item }: any) => <CardMovie movie={item} />}
             sliderWidth={windowWidth}
             itemWidth={300}
@@ -39,12 +38,12 @@ const HomeScreen = ({ navigation }) => {
 
         {/* Peliculas populares */}
 
-       <HorizontalSlider title="En cine" movies={moviesInCinema}/>
-    
-       <HorizontalSlider  movies={moviesInCinema}/>
+        <HorizontalSlider title="Popular" movies={popular} />
+        <HorizontalSlider title="Top Rated" movies={topRated} />
+        <HorizontalSlider title="Upcoming" movies={upcoming} />
 
-       <HorizontalSlider title="Más populares" movies={moviesInCinema}/>
-    
+
+
       </View>
     </ScrollView>
   )
